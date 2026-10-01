@@ -1,0 +1,23 @@
+def hanoi_solver(n):
+    rods = [list(range(n, 0, -1)), [], []]
+    moves = []
+
+    def record():
+        moves.append(" ".join(str(rod) for rod in rods))
+
+    def move_disks(count, source, auxiliary, target):
+        if count == 0:
+            return
+
+        move_disks(count - 1, source, target, auxiliary)
+
+        disk = rods[source].pop()
+        rods[target].append(disk)
+        record()
+
+        move_disks(count - 1, auxiliary, source, target)
+
+    record()
+    move_disks(n, 0, 1, 2)
+
+    return "\n".join(moves)
